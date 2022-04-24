@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "description": "ITIS-6177 Final Project: Azure Language Service API",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/kstanley-UNCC/itis-6177-final.git"
