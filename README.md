@@ -12,8 +12,6 @@
 
 ---
 ### Installation
-
-#### Mac Installation
 1. Install NodeJS:<br>
 `brew install node`
 
@@ -28,16 +26,7 @@ $ cd itis-6177-final
 4. Install dependencies:<br>
 `yarn install`
 
-#### Windows Installation
-Buy a Mac
-
-#### Linux Installation
-Buy a Mac
-
 ### Setup/Configuration
-
-#### Mac Configuration
-
 1. Sign into [Microsoft Azure](https://azure.microsoft.com/)
 2. Create a new [language resource](https://aka.ms/createLanguageResource)
 3. On the dashboard, click on *Click here to manage keys*
@@ -48,8 +37,4 @@ Buy a Mac
 8. Enter `source ~/.bashrc` for Bash, or `source ~/.zshrc` for ZSH
 9. Run the application using `yarn start`
 
-#### Windows Configuration
-Buy a Mac
 
-#### Linux Configuration
-Buy a Mac
