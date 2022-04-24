@@ -37,4 +37,6 @@ $ cd itis-6177-final
 8. Enter `source ~/.bashrc` for Bash, or `source ~/.zshrc` for ZSH
 9. Run the application using `yarn start`
 
+### Usage
 
+### API Reference
