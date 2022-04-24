@@ -31,11 +31,10 @@ $ cd itis-6177-final
 2. Create a new [language resource](https://aka.ms/createLanguageResource)
 3. On the dashboard, click on *Click here to manage keys*
 4. Copy `Key 1` to your clipboard
-5. For Bash users, open `~/.bashrc`, for ZSH users, open `~/.zshrc`, in either VIM or Nano
-6. Add `export AZURE_LANGUAGE_SUBSCRIPTION_KEY=<key>`, where `<key>` is the value of Key 1 in your clipboard
+5. Open `.env` in either VIM or Nano
+6. Edit `AZURE_LANGUAGE_SUBSCRIPTION_KEY=` and add the value of `Key 1` from your clipboard
 7. Save and quit using `:wq` in VIM, `Ctl-O` and `Ctl-X` in Nano
-8. Enter `source ~/.bashrc` for Bash, or `source ~/.zshrc` for ZSH
-9. Run the application using `yarn start`
+8. Run the application using `yarn start`
 
 ### Usage
 
