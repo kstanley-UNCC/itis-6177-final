@@ -3,6 +3,7 @@ const express = require('express');
 const HTTP_PORT = process.env.HTTP_PORT;
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use('/docs', require('./src/routes/swagger'));
 
