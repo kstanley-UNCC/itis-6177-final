@@ -1,6 +1,8 @@
 const express = require('express');
 const routes = express.Router();
 
+const baseUrl = process.env.AZURE_LANGUAGE_URL;
+
 /**
  * @swagger
  * /entities:
