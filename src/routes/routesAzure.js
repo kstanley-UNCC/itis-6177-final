@@ -1,5 +1,6 @@
 const express = require('express');
 const routes = express.Router();
+const {body, validationResult} = require('express-validator');
 const {Client} = require('node-rest-client');
 
 const client = new Client();
@@ -50,7 +51,14 @@ const POST = (uri, data, callback) => {
  */
 routes.post(
     '/entities',
+    body('text').isLength({min: 1}).withMessage('Text to analyze must be provided'),
+    body('lang').optional({nullable: true}).isLength({min: 2, max: 7}).withMessage('Invalid language code given.').matches(/[a-z]{2}(-[A-Za-z]{2,4})?/).withMessage('Invalid language code given.'),
     (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         POST(process.env.AZURE_LANGUAGE_ENDPOINT_NAMED_ENTITIES, {
             documents: [{
                 id: new Date().getTime(),
