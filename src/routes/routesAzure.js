@@ -7,14 +7,26 @@ const client = new Client();
 const baseUrl = process.env.AZURE_LANGUAGE_URL;
 const subscriptionKey = process.env.AZURE_LANGUAGE_SUBSCRIPTION_KEY;
 
+// Validate that the baseUrl exists and is not an empty string. Otherwise,
+// undefined behavior will occur from the rest client.
 if (baseUrl === null || typeof baseUrl === 'undefined' || baseUrl.length === 0) {
     throw new Error('Missing the baseUrl env variable');
 }
 
+// Validate that the subscriptionKey exists and is not an empty string.
 if (subscriptionKey === null || typeof subscriptionKey === 'undefined' || subscriptionKey.length === 0) {
     throw new Error('Missing the subscriptionKey env variable');
 }
 
+/**
+ * The handler for making POST requests to the Azure API instance.
+ *
+ * @param uri
+ * @param data
+ * @param callback
+ *
+ * @constructor
+ */
 const POST = (uri, data, callback) => {
     const args = {
         data: data,
