@@ -12,6 +12,25 @@ const baseUrl = process.env.AZURE_LANGUAGE_URL;
  *     tags:
  *      - "Azure Cognitive Service for Language"
  *     description: "Identify different entities in text and categorize them into pre-defined types."
+ *     produces:
+ *      - "application/json"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                text:
+ *                  type: string
+ *                language:
+ *                  type: string
+ *            examples:
+ *               "application/json":
+ *                   summary: "Example to Analyze"
+ *                   value:
+ *                       text: "Thor's retirement is interrupted by a galactic killer known as Gorr the God Butcher, who seeks the extinction of the gods. To combat the threat, Thor enlists the help of King Valkyrie, Korg and ex-girlfriend Jane Foster, who - to Thor's surprise - inexplicably wields his magical hammer, Mjolnir, as the Mighty Thor. Together, they embark upon a harrowing cosmic adventure to uncover the mystery of the God Butcher's vengeance and stop him before it's too late."
+ *                       lang: "en"
  *     responses:
  *       200:
  *         description: "Returns a list of entities categorized into pre-defined classes or types such as\\: person, location, event, product, and organization."
