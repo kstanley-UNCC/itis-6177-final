@@ -48,7 +48,29 @@ const POST = (uri, data, callback) => {
  *       400:
  *         description: "An error describing any problems detected in the request."
  */
-routes.post('/entities', (req, res) => {});
+routes.post(
+    '/entities',
+    (req, res, next) => {
+        POST(process.env.AZURE_LANGUAGE_ENDPOINT_NAMED_ENTITIES, {
+            documents: [{
+                id: new Date().getTime(),
+                text: req.body.text,
+                language: req.body.lang || null,
+            }],
+        }, data => {
+            if (typeof data.error !== 'undefined' && typeof data.error.innererror !== 'undefined') {
+                next({
+                    statusCode: 400,
+                    error: data.error.innererror.message,
+                });
+
+                return;
+            }
+
+            res.send(data);
+        });
+    }
+);
 
 /**
  * @swagger
