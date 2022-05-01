@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const {body, validationResult} = require('express-validator');
+const {body, query, validationResult} = require('express-validator');
 const {Client} = require('node-rest-client');
 
 const client = new Client();
@@ -122,7 +122,36 @@ routes.post(
  *       400:
  *         description: "An error describing any problems detected in the request."
  */
-routes.post('/phrases', (req, res) => {});
+routes.post(
+    '/phrases',
+    body('text').isLength({min: 1}).withMessage('Text to analyze must be provided'),
+    body('lang').optional({nullable: true}).isLength({min: 2, max: 7}).withMessage('Invalid language code given.').matches(/[a-z]{2}(-[A-Za-z]{2,4})?/).withMessage('Invalid language code given.'),
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        POST(process.env.AZURE_LANGUAGE_ENDPOINT_KEY_PHRASES, {
+            documents: [{
+                id: new Date().getTime(),
+                text: req.body.text,
+                language: req.body.lang || null,
+            }],
+        }, data => {
+            if (typeof data.error !== 'undefined' && typeof data.error.innererror !== 'undefined') {
+                next({
+                    statusCode: 400,
+                    error: data.error.innererror.message,
+                });
+
+                return;
+            }
+
+            res.send(data);
+        });
+    }
+);
 
 /**
  * @swagger
@@ -163,7 +192,37 @@ routes.post('/phrases', (req, res) => {});
  *       400:
  *         description: "An error describing any problems detected in the request."
  */
-routes.post('/sentiment', (req, res) => {});
+routes.post(
+    '/sentiment',
+    query('opinions').optional().isBoolean().withMessage('Value must be either true or false').toBoolean(),
+    body('text').isLength({min: 1}).withMessage('Text to analyze must be provided'),
+    body('lang').optional({nullable: true}).isLength({min: 2, max: 7}).withMessage('Invalid language code given.').matches(/[a-z]{2}(-[A-Za-z]{2,4})?/).withMessage('Invalid language code given.'),
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        POST(process.env.AZURE_LANGUAGE_ENDPOINT_SENTIMENT + '?opinionMining=' + (req.query.opinions ? 'true' : 'false'), {
+            documents: [{
+                id: new Date().getTime(),
+                text: req.body.text,
+                language: req.body.lang || null,
+            }],
+        }, data => {
+            if (typeof data.error !== 'undefined' && typeof data.error.innererror !== 'undefined') {
+                next({
+                    statusCode: 400,
+                    error: data.error.innererror.message,
+                });
+
+                return;
+            }
+
+            res.send(data);
+        });
+    }
+);
 
 /**
  * @swagger
