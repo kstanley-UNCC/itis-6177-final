@@ -4,6 +4,17 @@ const {Client} = require('node-rest-client');
 
 const client = new Client();
 const baseUrl = process.env.AZURE_LANGUAGE_URL;
+const POST = (uri, data, callback) => {
+    const args = {
+        data: data,
+        headers: {
+            'Ocp-Apim-Subscription-Key': process.env.AZURE_LANGUAGE_SUBSCRIPTION_KEY,
+            'Content-Type': 'application/json',
+        },
+    };
+
+    client.post(`${baseUrl}${uri}`, args, callback);
+};
 
 /**
  * @swagger
